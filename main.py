@@ -57,8 +57,8 @@ def home():
     if request.method=='POST':
         if request.form['opt']=="LOGIN":
             return redirect(url_for('login'))
-    if request.form['opt']=="LOGOUT":
-        return redirect(url_for('logout'))   
+        if request.form['opt']=="LOGOUT":
+            return redirect(url_for('logout'))   
     return render_template('home.html')
 
 @app.route('/add', methods=['GET','POST'])
@@ -75,7 +75,8 @@ def add():
     return redirect(url_for('add.html'))
 
 
-@app.route('/view',methods=['GET','POST'])
+@app.route('/view',methods=['GET', 'POST'])
+@login_required
 def view():
      db = get_db()
      cur = db.execute('select sName,sMajor from student')

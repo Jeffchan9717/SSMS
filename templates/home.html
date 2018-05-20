@@ -1,21 +1,10 @@
-{% extends "layout.html" %}
+{% extends "layout.html" %} 
 {% block body %}
-  {% if session.logged_in %}
-    <form action="{{ url_for('add_entry') }}" method=post class=add-entry>
-      <dl>
-        <dt>Title:
-        <dd><input type=text size=30 name=title>
-        <dt>Text:
-        <dd><textarea name=text rows=5 cols=40></textarea>
-        <dd><input type=submit value=Share>
-      </dl>
-    </form>
-  {% endif %}
-  <ul class=entries>
-  {% for entry in entries %}
-    <li><h2>{{ entry.title }}</h2>{{ entry.text|safe }}
-  {% else %}
-    <li><em>Unbelievable.  No entries here so far</em>
-  {% endfor %}
-  </ul>
+
+
+<div class="hero-unit">
+  <h2>SSMS - 便于管理你的学生教师信息</h2>
+  <p>这是一个学生信息管理系统, 你可以对学生记录进行添加, 删除, 修改, 查询操作. 你需要登录后使用这些功能</p>
+  <a href="{{ url_for('login') }}" class="btn btn-large btn-success">登录</a>
+</div>
 {% endblock %}
