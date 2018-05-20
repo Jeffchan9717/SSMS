@@ -21,9 +21,13 @@ create table teacher (
 );
 
 drop table if exists course;
-
 create table course (
   cID integer primary key autoincrement, -- 课程号
   cName string not null, -- 课程名
   cCredit string not null -- 学分
 );
+
+INSERT INTO student VALUES (111111, 'ls', '男', '19960915', '北京', '信科', '计科', '2013');
+INSERT INTO student VALUES (222222, 'chj', '男', '19991211', '浙江', '信科', '计科', '2017');
+INSERT INTO student VALUES (333333, 'lzk', '男', '19950428', '广西', '信科', '计科', '2015');
+-- sqlite3 ssms.db < schema.sql

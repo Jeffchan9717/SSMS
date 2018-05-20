@@ -79,9 +79,9 @@ def add():
 @login_required
 def view():
      db = get_db()
-     cur = db.execute('select sName,sMajor from student')
-     entries = cur.fetchall()
-     return render_template('view.html', entries=entries)
+     cur = db.execute('select sID, sName, sSex, sBirthday, sBirthPlace, sCollege, sMajor, sEnroll from student')
+     feedback = cur.fetchall()
+     return render_template('view.html', feedback=feedback)
 
 
 @app.route('/search',methods=['GET','POST'])
@@ -90,8 +90,8 @@ def search():
         if request.form['search']=="SEARCH":
             db=get_db()
             cur=db.execute('select * from student where sName = ? ', [request.form['s_name']] )
-            entries=cur.fetchall()
-            return render_template('view.html', entries=entries)
+            feedback=cur.fetchall()
+            return render_template('view.html', feedback=feedback)
     return render_template('search.html')
 
 @app.route('/delete',methods=['GET','POST'])
