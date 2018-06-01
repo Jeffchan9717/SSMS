@@ -16,20 +16,20 @@
   <div class="login-screen">
     <div class="login-icon">
       <img src="static/images/login/icon.png" alt="Welcome to Mail App" />
-      <h4>欢迎登入
+      <h4>欢迎注册
         <small>学生成绩管理系统(SSMS)</small>
       </h4>
     </div>
 
-    <form action="{{ url_for('login') }}" method=post class="form-horizontal">
+    <form action="{{ url_for('signup') }}" method=post class="form-horizontal">
 
       <div class="login-form">
         <div class="form-group">
           <input type="text" class="form-control login-field" value="" placeholder="请输入账号名称" id="login-name" name="username" /> 
-          {% if error=="username" %}
+          {% if error=="true" %}
           <div class="control-group error">
             <div class="controls">
-              <span class="help-inline" id="inputUserNameError">用户名或密码不正确</span>
+              <span class="help-inline" id="inputUserNameError">用户名或密码或邮箱不正确</span>
             </div>
 
           </div>
@@ -38,20 +38,19 @@
 
         <div class="form-group">
           <input type="password" class="form-control login-field" value="" placeholder="请输入账号密码" id="login-pass" name="password" /> 
-          {% if error=="password" %}
+          {% if error=="true" %}
           <div class="controls">
-            <span class="help-inline">用户名或密码不正确</span>
+            <span class="help-inline">用户名或密码或邮箱不正确</span>
           </div>
           {% endif %}
         </div>
 
-        <button type="submit" class="btn btn-primary btn-lg btn-block" href="#">登入</button>
-        <a class="login-link" href="#">忘记密码?</a>
+        <button type="submit" class="btn btn-primary btn-lg btn-block" href="#">注册</button>
       </div>
 
     </form>
 
   </div>
-</div>
+</div> 
 
 {% endblock %}
