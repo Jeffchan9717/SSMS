@@ -27,7 +27,8 @@ mysql.init_app(app)
 def login_required(f):
     @wraps(f)
     def wrap(*args, **kwargs):
-        if 'logged_in' in session:
+        # session.user 保存当前登入会话的用户名
+        if 'user' in session:
             return f(*args, **kwargs)
         else:
             flash('You need to login first.')
@@ -37,11 +38,6 @@ def login_required(f):
 
 @app.route('/')
 def home():
-    if request.method == 'POST':
-        if request.form['opt'] == "LOGIN":
-            return redirect(url_for('login'))
-        if request.form['opt'] == "LOGOUT":
-            return redirect(url_for('logout'))
     return render_template('home.html')
 
 
@@ -53,9 +49,9 @@ def add():
             print "[+] " + request.form['sName'], request.form['sMajor']
             conn = mysql.connect()
             cursor = conn.cursor()
-            db.execute('insert into student (sName, sMajor) values(?,?)',
+            cursor.execute('insert into student (sName, sMajor) values(?,?)',
                        [request.form['sName'], request.form['sMajor']])
-            db.commit()
+            cursor.commit()
             flash('New student information was successfully added')
     return redirect(url_for('add.html'))
 
@@ -126,39 +122,47 @@ def update():
 def login():
     error = None
     if request.method == 'POST':
-        if request.form['username'] != app.config['USERNAME']:
-            error = 'Invalid username'
-        elif request.form['password'] != app.config['PASSWORD']:
-            error = 'Invalid password'
+        _username = request.form['username']
+        _password = request.form['password']
+
+        con = mysql.connect()
+        cursor = con.cursor()
+        cursor.callproc('sp_validateLogin',(_username,))
+        data = cursor.fetchall()
+        print str(data)
+
+        if len(data) > 0:
+            if check_password_hash(str(data[0][1]),_password):
+                session['user'] = data[0][0]
+                flash('You have logged in successful')
+                return redirect(url_for('home'))
+            else:
+                error='Wrong Eamil address or Password'
+                flash('Wrong Email address or Password.')
+                render_template('login.html', error=error)
         else:
-            session['logged_in'] = True
-            flash('You were logged in')
-            return redirect(url_for('home'))
+            return render_template('login.html', error=error)
+            
     return render_template('login.html', error=error)
 
 @app.route('/signup',methods=['GET','POST'])
 def signup():
     error = None
     if request.method == 'POST':
-        _name = request.form['username']
+        _username = request.form['username']
         _password = request.form['password']
 
-        # validate the received values
-        if _name and _password:
-            
-            # All Good, let's call MySQL
-            
+        if _username and _password: 
             conn = mysql.connect()
             cursor = conn.cursor()
             _hashed_password = generate_password_hash(_password)
-            cursor.callproc('sp_createUser',(_name,_hashed_password))
+            cursor.callproc('sp_createUser',(_username,_hashed_password))
             data = cursor.fetchall()
 
             if len(data) is 0:
                 conn.commit()
                 cursor.close() 
                 conn.close()
-                # TODO: flash don't display
                 flash('User created successfully !')
                 return redirect(url_for('home'))
             else:
@@ -173,7 +177,7 @@ def signup():
 
 @app.route('/logout')
 def logout():
-    session.pop('logged_in', None)
+    session.pop('user', None)
     flash('You were logged out')
     return redirect(url_for('home'))
 

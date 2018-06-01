@@ -104,16 +104,18 @@
 
 
           </ul>
+          {% if not session.user %}
           <div class="navbar-form navbar-left">
               <a type="submit" href="{{ url_for('signup') }}" class="btn btn-block btn-lg btn-primary" name="opt" value="SIGNUP">注册</a>
           </div>
           <div class="navbar-form navbar-right">
-              {% if not session.logged_in %}  
-              <a type="submit" href="{{ url_for('login') }}" class="btn btn-block btn-lg btn-primary" name="opt" value="LOGIN">登入</a>
-              {% else %}
-              <a type="submit" href="{{ url_for('logout') }}" class="btn btn-default" name="opt" value="LOGOUT">登出</a>
-              {% endif %}         
+            <a type="submit" href="{{ url_for('login') }}" class="btn btn-block btn-lg btn-primary" name="opt" value="LOGIN">登入</a>                  
           </div>
+          {% else %}
+          <div class="navbar-form navbar-right">
+            <a type="submit" href="{{ url_for('logout') }}" class="btn btn-default" name="opt" value="LOGOUT">登出</a>
+          </div>  
+          {% endif %}     
           <!-- <form class="navbar-form navbar-right"> -->  
 
           <!-- </form> -->

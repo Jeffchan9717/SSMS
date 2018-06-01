@@ -2,12 +2,10 @@
 
 {% block body %}
 
-{% if not session.logged_in %} 
+{% if not session.user %} 
 {% for message in get_flashed_messages() %}
-<br>
 <div class="alert alert-info">
   <a href="/login" class="close" data-dismiss="alert">&times;</a>
-  <br>
   <strong>注意!</strong>{{message}}
 </div>
 {% endfor %}

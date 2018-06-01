@@ -2,7 +2,6 @@
 {% block body %}
 
 {% for message in get_flashed_messages() %}
-<br>
 <div class="alert alert-info">
   <a href="/" class="close" data-dismiss="alert">&times;</a>
   <strong>注意!</strong>{{message}}
