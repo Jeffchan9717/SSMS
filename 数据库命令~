@@ -70,7 +70,7 @@ alter user teacher101@localhost identified by '123';
 成绩在负数时会设置为0，在大于100时会设为100
 delimiter $$
 select的时候
-create trigger scoreOverTselect before insert on SC for each row begin if(new.scScore < 0) then set new.scScore=0; end if; if(new.scScore > 100) then set new.scScore=100; end if; end$$
+create trigger scoreOverT before insert on SC for each row begin if(new.scScore < 0) then set new.scScore=0; end if; if(new.scScore > 100) then set new.scScore=100; end if; end$$
 update的时候
 create trigger scoreOverTupdate before update on SC for each row  begin  if (new.scScore<0) then set new.scScore=0; end if; if(new.scScore > 100) then set new.scScore=100; end if; end $$
 
