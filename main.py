@@ -129,7 +129,6 @@ def login():
         cursor = con.cursor()
         cursor.callproc('sp_validateLogin',(_username,))
         data = cursor.fetchall()
-        print str(data)
 
         if len(data) > 0:
             if check_password_hash(str(data[0][1]),_password):
