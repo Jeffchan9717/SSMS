@@ -23,15 +23,23 @@ use school
 	create user 'teacher103'@'localhost';
 	grant 'teacher'@'localhost' to 'teacher103'@'localhost';
 	set default role all to 'teacher103'@'localhost';
+
+
 添加学生用户
 	create user 'student1001'@'localhost', 'student2001'@'localhost', 'student2002'@'localhost', 'student2003'@'localhost', 'student3001'@'localhost';
 	grant 'student'@'localhost' to 'student1001'@'localhost', 'student2001'@'localhost', 'student2002'@'localhost', 'student2003'@'localhost', 'student3001'@'localhost';
 	set default role all to 'student1001'@'localhost',  'student2001'@'localhost', 'student2002'@'localhost', 'student2003'@'localhost', 'student3001'@'localhost';
+
+
+
 设置学生视图
 只能看自己的学生信息
 create sql security invoker view sInfo as  select * from student_info where sID in (select substring(current_user(), 8, 4));
+
 grant select, update on sInfo to student@localhost;
 select * from sInfo;
+
+
 学生修改自己的学生信息
 update sInfo set sSex='未知' where sID=substring(current_user(), 8, 4);
 学生查看自己的成绩和选课信息

@@ -31,7 +31,7 @@ def login_required(f):
         if 'user' in session:
             return f(*args, **kwargs)
         else:
-            flash('You need to login first.')
+            flash('请先登录!')
             return redirect(url_for('login'))
     return wrap
 
@@ -52,7 +52,7 @@ def add():
             cursor.execute('insert into student (sName, sMajor) values(?,?)',
                        [request.form['sName'], request.form['sMajor']])
             cursor.commit()
-            flash('New student information was successfully added')
+            flash('成功添加信息!')
     return redirect(url_for('add.html'))
 
 
@@ -97,7 +97,7 @@ def delete():
             cursor.commit()
             conn.close()
             cursor.close()
-            flash('Sucessfully Deleted')
+            flash('成功删除信息!')
     return render_template('delete.html')
 
 
@@ -114,7 +114,7 @@ def update():
             cursor.commit()
             conn.close()
             cursor.close()
-            flash('Sucessfully Updated')
+            flash('成功修改信息!')
     return render_template('update.html')
 
 
@@ -133,11 +133,11 @@ def login():
         if len(data) > 0:
             if check_password_hash(str(data[0][1]),_password):
                 session['user'] = data[0][0]
-                flash('You have logged in successful')
+                flash('你已成功登入')
                 return redirect(url_for('home'))
             else:
-                error='Wrong Eamil address or Password'
-                flash('Wrong Email address or Password.')
+                error='用户名或密码错误!'
+                flash('用户名或密码错误!')
                 render_template('login.html', error=error)
         else:
             return render_template('login.html', error=error)
@@ -177,7 +177,7 @@ def signup():
 @app.route('/logout')
 def logout():
     session.pop('user', None)
-    flash('You were logged out')
+    flash('你已成功登出!')
     return redirect(url_for('home'))
 
 
