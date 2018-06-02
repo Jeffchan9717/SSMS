@@ -9,8 +9,8 @@ from contextlib import closing
 from functools import wraps
 
 # 解决UTF-8编码问题
-reload(sys)
-sys.setdefaultencoding('utf-8')
+# reload(sys)
+# sys.setdefaultencoding('utf-8')
 
 # create application
 mysql = MySQL()
@@ -53,17 +53,17 @@ def add():
                        [request.form['sName'], request.form['sMajor']])
             cursor.commit()
             flash('成功添加信息!')
-    return redirect(url_for('add.html'))
+    return render_template('add.html')
 
 
-@app.route('/view', methods=['GET', 'POST'])
+@app.route('/view', methods=['GET'])
 @login_required
 def view():
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute(
-        'select sID, sName, sSex, sBirthday, sBirthPlace, sCollege, sMajor, sEnroll from student')
+    cursor.execute('select * from student_info')
     feedback = cursor.fetchall()
+    print str(feedback)
     conn.close()
     cursor.close()
     return render_template('view.html', feedback=feedback)
@@ -182,4 +182,4 @@ def logout():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5002)

@@ -56,3 +56,4 @@ ERROR 1449 (HY000): The user specified as a definer ('mysql.infoschema'@'localho
 ```
 mysql_upgrade -u ${your_username} -p ${your_password}
 ```
+
