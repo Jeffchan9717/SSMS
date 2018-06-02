@@ -44,8 +44,38 @@
           {% endif %}
         </div>
 
+        <div>
+          
+          <label class="radio" style="color:#424242">
+            <input type="radio" name="identity" id="studentRadios" value="student" data-toggle="radio" class="custom-radio" checked="">
+            <span class="icons">
+              <span class="icon-unchecked"></span>
+              <span class="icon-checked"></span>
+            </span>
+            <strong>以学生身份登录</strong> 
+          </label>
+
+          <label class="radio" style="color:#424242">
+            <input type="radio" name="identity" id="teacherRadios" value="teacher" data-toggle="radio" class="custom-radio">
+            <span class="icons">
+                <span class="icon-unchecked"></span>
+                <span class="icon-checked"></span>
+            </span>
+            <strong>以教师身份登录</strong> 
+          </label>
+
+          <label class="radio" style="color:#424242">
+            <input type="radio" name="identity" id="adminRadios" value="admin" data-toggle="radio" class="custom-radio">
+            <span class="icons">
+                <span class="icon-unchecked"></span>
+                <span class="icon-checked"></span>
+            </span>
+            <strong>以管理员身份登录</strong> 
+          </label>
+        </div>
+        <br>
+        
         <button type="submit" class="btn btn-primary btn-lg btn-block" href="#">登入</button>
-        <a class="login-link" href="#">忘记密码?</a>
       </div>
 
     </form>

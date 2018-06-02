@@ -2109,7 +2109,7 @@ fieldset[disabled] .input-group-btn .btn-default.active {
 .radio input[type="checkbox"].custom-checkbox:disabled + .icons,
 .radio input[type="radio"].custom-radio:disabled + .icons {
   cursor: default;
-  color: #e6e8ea;
+  color: #93b9df;
 }
 
 .checkbox input[type="checkbox"].custom-checkbox:disabled + .icons .icons,

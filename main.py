@@ -9,8 +9,8 @@ from contextlib import closing
 from functools import wraps
 
 # 解决UTF-8编码问题
-# reload(sys)
-# sys.setdefaultencoding('utf-8')
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 # create application
 mysql = MySQL()
@@ -124,6 +124,11 @@ def login():
     if request.method == 'POST':
         _username = request.form['username']
         _password = request.form['password']
+        _identity = request.form['identity'] # student or teacher or admin
+
+        # TODO: 根据_identity来保存会话信息
+
+        print str(request.form)
 
         con = mysql.connect()
         cursor = con.cursor()
