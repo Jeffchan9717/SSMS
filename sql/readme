@@ -40,7 +40,7 @@ admin_insert_user_info.sql 管理员插入学生或老师
 这项操作同时也会创建对应的学生或老师用户，并且为他们设置密码，注意此时学生和老师都是没有权限的。
 
 
-admin_insert_course_info	管理员插入课程
+admin_insert_course_info.sql	管理员插入课程
 	#CALL admin_insert_course('计算机导论', 2, '201801');
 								cName		cCredit	cTerm学期
 admin_update_course_info.sql	管理员更新课程
