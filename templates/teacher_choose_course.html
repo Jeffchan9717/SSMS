@@ -10,9 +10,9 @@
 {% endfor %}
 {% endif %}
 
-{% if session.identity and session.identity == 'student' %}
+{% if session.identity and session.identity == 'teacher' %}
 
-<form action="{{ url_for('student_choose_course') }}" method=post class="form-horizontal" operation="">
+<form action="{{ url_for('teacher_choose_course') }}" method=post class="form-horizontal" operation="">
         <input type="text" class="form-control" value="" placeholder="请输入要选的课程号" id="choose-course" name="courseid" /> 
         <br>
         <button type="submit" class="btn btn-primary btn-lg btn-block" href="#">提交</button>
