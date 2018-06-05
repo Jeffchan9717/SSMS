@@ -13,15 +13,17 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 
 # create application
-mysql = MySQL()
+mysql = MySQL(autocommit = True)
 app = Flask(__name__)
 app.secret_key = 'development key'
 # MySQL configurations
 
 app.config['MYSQL_DATABASE_DB'] = 'school'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-
-
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'VANCIR'
+mysql.init_app(app)
+mysql_user = MySQL(autocommit = True)
 
 def login_required(f):
     @wraps(f)
@@ -46,7 +48,7 @@ def student_choose_course():
             # 学生提供课程号进行选课
             _courseid = request.form['courseid']
 
-            conn = mysql.connect()
+            conn = mysql_user.connect()
             cursor = conn.cursor()
             cursor.callproc('student_insert_SC', (_courseid))
             feedback = cursor.fetchall()
@@ -62,23 +64,31 @@ def student_see_course():
         if session['identity'] == "student":
             # 查看session['user']的课程信息及相应成绩学分
             # TODO: student_select_SC是否能确保取得session['user]的信息?
-            conn = mysql.connect()
+            conn = mysql_user.connect()
             cursor = conn.cursor()
             # sID, cID, scScore, cCredit
-            cursor.callproc('student_select_SC')
+            cursor.callproc('student_select_course_info')
             feedback = cursor.fetchall()
-            conn.close()
+            print str(feedback)
             cursor.close()
+            conn.close()            
             return render_template('student_see_course.html', feedback=feedback)
     return render_template('student_see_course.html')
 
 @app.route('/student_see_all_course', methods=['GET', 'POST'])
 @login_required
 def student_see_all_course():
-    if request.method == 'POST':
+    if request.method == 'GET':
         if session['identity'] == "student":
             # 学生查看所有的课程信息
             # TODO: 编写代码
+            conn = mysql_user.connect()
+            cursor = conn.cursor()
+            cursor.callproc('student_select_course_info')
+            feedback = cursor.fetchall()
+            
+            cursor.close()
+            conn.close()
             return render_template('student_see_all_course.html', feedback=feedback)
     return render_template('student_see_all_course.html')
 
@@ -89,6 +99,12 @@ def student_see_all_student():
         if session['identity'] == "student":
             # 学生查看所有的学生信息
             # TODO: 编写代码
+            conn = mysql_user.connect()
+            cursor = conn.cursor()
+            cursor.callproc('student_select_student_info')
+            feedback = cursor.fetchall()
+            cursor.close()
+            conn.close()
             return render_template('student_see_all_student.html', feedback=feedback)
     return render_template('student_see_all_student.html')
 
@@ -101,7 +117,7 @@ def student_see_termscore():
                 # 学生提供学期号查看分数
                 _term = request.form['term']
 
-                conn = mysql.connect()
+                conn = mysql_user.connect()
                 cursor = conn.cursor()
                 # cTerm, cID, scSCore
                 cursor.callproc('student_select_ctermScore', (str(_term),))
@@ -121,7 +137,7 @@ def teacher_choose_course():
             # 老师选要教的课
             _courseid = request.form['courseid']
 
-            conn = mysql.connect()
+            conn = mysql_user.connect()
             cursor = conn.cursor()
             cursor.callproc('teacher_insert_TC', (_courseid))
             # cursor.commit()
@@ -137,7 +153,7 @@ def teacher_see_course():
     if request.method == 'POST':
         if session['identity'] == "teacher":
             # 老师查看自己教的课程
-            conn = mysql.connect()
+            conn = mysql_user.connect()
             cursor = conn.cursor()
             # TC.tID, TC.cID, cTerm
             cursor.callproc('teacher_select_TC')
@@ -158,7 +174,7 @@ def teacher_update_scScore():
             _cid = request.form['cid']  # 课程号
             _scScore = request.form['scScore']  # 成绩 
 
-            conn = mysql.connect()
+            conn = mysql_user.connect()
             cursor = conn.cursor()
             cursor.callproc('teacher_update_scScore', (_sid, _cid, _scScore))
             feedback = cursor.fetchall()
@@ -174,7 +190,7 @@ def teacher_update_scScore():
 def teacher_see_all_teacher():
     if session['identity'] == "teacher":
         # 教师查看所有的教师信息
-        conn = mysql.connect()
+        conn = mysql_user.connect()
         cursor = conn.cursor()
         cursor.callproc('teacher_select_teacher_info')
         feedback = cursor.fetchall()
@@ -189,7 +205,7 @@ def teacher_see_all_teacher():
 def teacher_see_all_student():
     if session['identity'] == "teacher":
         # 教师查看所有的学生信息
-        conn = mysql.connect()
+        conn = mysql_user.connect()
         cursor = conn.cursor()
         cursor.callproc('teacher_select_student_info')
         feedback = cursor.fetchall()
@@ -204,7 +220,7 @@ def teacher_see_all_student():
 def teacher_see_all_score():
     if session['identity'] == "teacher":
         # 教师查看所有的学生成绩
-        conn = mysql.connect()
+        conn = mysql_user.connect()
         cursor = conn.cursor()
         cursor.callproc('teacher_select_SC_info')
         feedback = cursor.fetchall()
@@ -218,7 +234,7 @@ def teacher_see_all_score():
 def admin_see_all_user():
     if session['identity'] == "admin":
         # 管理员查看所有的账户
-        conn = mysql.connect()
+        conn = mysql_user.connect()
         cursor = conn.cursor()
         cursor.callproc('admin_select_user_info')
         feedback = cursor.fetchall()
@@ -233,7 +249,7 @@ def admin_see_all_user():
 def admin_see_all_student():
     if session['identity'] == "admin":
         # 管理员查看所有的学生信息
-        conn = mysql.connect()
+        conn = mysql_user.connect()
         cursor = conn.cursor()
         cursor.callproc('admin_select_student_info')
         feedback = cursor.fetchall()
@@ -248,7 +264,7 @@ def admin_see_all_student():
 def admin_see_all_teacher():
     if session['identity'] == "admin":
         # 管理员查看所有的教师信息
-        conn = mysql.connect()
+        conn = mysql_user.connect()
         cursor = conn.cursor()
         cursor.callproc('admin_select_teacher_info')
         feedback = cursor.fetchall()
@@ -263,7 +279,7 @@ def admin_see_all_teacher():
 def admin_see_all_score():
     if session['identity'] == "admin":
         # 管理员查看所有的学生成绩
-        conn = mysql.connect()
+        conn = mysql_user.connect()
         cursor = conn.cursor()
         cursor.callproc('admin_select_SC_info')
         feedback = cursor.fetchall()
@@ -278,7 +294,7 @@ def admin_see_all_score():
 def admin_see_all_TC():
     if session['identity'] == "admin":
         # 管理员查看所有的教师授课
-        conn = mysql.connect()
+        conn = mysql_user.connect()
         cursor = conn.cursor()
         cursor.callproc('admin_select_TC_info')
         feedback = cursor.fetchall()
@@ -292,7 +308,7 @@ def admin_see_all_TC():
 def admin_see_all_major():
     if session['identity'] == "admin":
         # 管理员查看所有的专业信息
-        conn = mysql.connect()
+        conn = mysql_user.connect()
         cursor = conn.cursor()
         cursor.callproc('admin_select_major_info')
         feedback = cursor.fetchall()
@@ -306,7 +322,7 @@ def admin_see_all_major():
 def admin_see_all_course():
     if session['identity'] == "admin":
         # 管理员查看所有的课程信息
-        conn = mysql.connect()
+        conn = mysql_user.connect()
         cursor = conn.cursor()
         cursor.callproc('admin_select_course_info')
         feedback = cursor.fetchall()
@@ -326,7 +342,7 @@ def admin_insert_user():
             _uPassword = request.form['uPassword']
             _uIdentity = request.form['uIdentity']  # 学生为0, 教师为1
             
-            conn = mysql.connect()
+            conn = mysql_user.connect()
             cursor = conn.cursor()
             cursor.callproc('admin_insert_user_info', (_uID, _uPassword, _uIdentity))
             feedback = cursor.fetchall()
@@ -344,7 +360,7 @@ def admin_grant_user():
             # 管理员赋予账号权限
             _grantid = request.form['grantid']
 
-            conn = mysql.connect()
+            conn = mysql_user.connect()
             cursor = conn.cursor()
             cursor.callproc('admin_GRANT_user_access', (_grantid))
             feedback = cursor.fetchall()
@@ -362,7 +378,7 @@ def admin_revoke_user():
             # 管理员撤回账号权限
             _revokeid = request.form['revokeid']
 
-            conn = mysql.connect()
+            conn = mysql_user.connect()
             cursor = conn.cursor()
             cursor.callproc('admin_revoke_user_access', (_revokeid))
             feedback = cursor.fetchall()
@@ -381,7 +397,7 @@ def admin_add_major():
             _majorid = request.form['majorid']
             _major_name = request.form['major_name']
 
-            conn = mysql.connect()
+            conn = mysql_user.connect()
             cursor = conn.cursor()
             cursor.callproc('admin_insert_major_info', (_majorid, _major_name))
             feedback = cursor.fetchall()
@@ -401,7 +417,7 @@ def admin_add_course():
             _course_credit = request.form['course_credit']
             _course_term = request.form['course_term']
 
-            conn = mysql.connect()
+            conn = mysql_user.connect()
             cursor = conn.cursor()
             cursor.callproc('admin_insert_course', (_course_name, _course_credit, _course_term))
             feedback = cursor.fetchall()
@@ -422,7 +438,7 @@ def admin_update_course():
             _course_credit = request.form['course_credit']
             _course_term = request.form['course_term']
 
-            conn = mysql.connect()
+            conn = mysql_user.connect()
             cursor = conn.cursor()
             cursor.callproc('admin_update_course_info', (_course_id, _course_name, _course_credit, _course_term))
             feedback = cursor.fetchall()
@@ -440,7 +456,7 @@ def admin_delete_course():
             # 管理员删除课程信息
             _deleteid = request.form['deleteid']
 
-            conn = mysql.connect()
+            conn = mysql_user.connect()
             cursor = conn.cursor()
             cursor.callproc('admin_delete_course_info', (_deleteid))
             feedback = cursor.fetchall()
@@ -465,7 +481,7 @@ def admin_update_student():
             _student_college = request.form['student_college']
             _student_class = request.form['student_class']
 
-            conn = mysql.connect()
+            conn = mysql_user.connect()
             cursor = conn.cursor()
             cursor.callproc('admin_update_student_info', (_student_id, _student_major_id, _student_user_id, _student_sex, \
                                                         _student_birthday, _student_birthplace, _student_college, _student_class))
@@ -485,7 +501,7 @@ def admin_delete_student():
             # 管理员删除学生信息
             _deleteid = request.form['deleteid']
 
-            conn = mysql.connect()
+            conn = mysql_user.connect()
             cursor = conn.cursor()
             cursor.callproc('admin_delete_student_info', (_deleteid))
             feedback = cursor.fetchall()
@@ -507,7 +523,7 @@ def admin_update_teacher():
             _teacher_sex = request.form['teacher_sex']
             _teacher_college = request.form['teacher_college']
 
-            conn = mysql.connect()
+            conn = mysql_user.connect()
             cursor = conn.cursor()
             cursor.callproc('admin_update_teacher_info', (_teacher_id, _teacher_major_id, _teacher_user_id, _teacher_sex, _teacher_college))
             feedback = cursor.fetchall()
@@ -526,7 +542,7 @@ def admin_delete_teacher():
             # 管理员删除教师信息
             _deleteid = request.form['deleteid']
 
-            conn = mysql.connect()
+            conn = mysql_user.connect()
             cursor = conn.cursor()
             cursor.callproc('admin_delete_teacher_info', (_deleteid))
             feedback = cursor.fetchall()
@@ -553,9 +569,9 @@ def manage():
                 _uPassword = request.form['uPassword']
                 _uIdentity = request.form['uIdentity']  # 学生为0, 教师为1
                 
-                conn = mysql.connect()
+                conn = mysql_user.connect()
                 cursor = conn.cursor()
-                cursor.callproc('admin_insert_user_info', (_uid, _uPassword, _uIdentity))
+                cursor.callproc('admin_insert_user_info', (_uID, _uPassword, _uIdentity))
                 feedback = cursor.fetchall()
                 # cursor.commit()
                 conn.close()
@@ -584,14 +600,27 @@ def login():
 
         if len(data) > 0:
             if str(data[0][1]) == _password:
-                # 连接mysql
-                app.config['MYSQL_DATABASE_USER'] = _username
-                app.config['MYSQL_DATABASE_PASSWORD'] = _password
-                mysql.init_app(app)
+                # 重新用用户信息来登录mysql_user
                 
+                app_user = Flask(__name__)
+                app_user.secret_key = 'development key'
+                # MySQL configurations
+
+                app_user.config['MYSQL_DATABASE_DB'] = 'school'
+                app_user.config['MYSQL_DATABASE_HOST'] = 'localhost'
+                app_user.config['MYSQL_DATABASE_USER'] = _username
+                app_user.config['MYSQL_DATABASE_PASSWORD'] = _password
+                mysql_user.init_app(app_user)
+                
+
                 session['user'] = data[0][0]    # 保存用户名
                 session['identity'] = _identity # 保存账户身份信息
                 flash('你已成功登入')
+
+                print "[*] 正在尝试连接mysql_user"
+                conn_user = mysql_user.connect()
+                cursor = conn.cursor()
+                print "[*] test.........."
                 return redirect(url_for('home'))
             else:
                 error='error'
