@@ -120,9 +120,10 @@
                 </ul>
               </li>
 
-                <li>
-                    <a href="{{ url_for('student_see_course') }}">账号管理</a>
-                </li>
+              <li>
+                <a href="{{ url_for('admin_insert_user') }}">账号管理</a>
+              </li>
+
 
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">课程专业管理</a>
@@ -174,9 +175,6 @@
 
 
           {% if not session.user %}
-          <!-- <div class="navbar-form navbar-left">
-              <a type="submit" href="{{ url_for('signup') }}" class="btn btn-block btn-lg btn-primary" name="opt" value="SIGNUP">注册</a>
-          </div> -->
           <div class="navbar-form navbar-right">
             <a type="submit" href="{{ url_for('login') }}" class="btn btn-block btn-lg btn-primary" name="opt" value="LOGIN">登入</a>                  
           </div>

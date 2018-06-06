@@ -1,5 +1,5 @@
-source /home/vancir/Documents/code/SSMS/sql/root.sql
 source /home/vancir/Documents/code/SSMS/sql/admin.sql
+source /home/vancir/Documents/code/SSMS/sql/root.sql
 source /home/vancir/Documents/code/SSMS/sql/sp_createUser.sql
 source /home/vancir/Documents/code/SSMS/sql/sp_validateLogin.sql
 source /home/vancir/Documents/code/SSMS/sql/admin_insert_user_info.sql
