@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block body %}
+
+{% if not session.user %} 
+{% for message in get_flashed_messages() %}
+<div class="alert alert-info">
+  <a href="/login" class="close" data-dismiss="alert">&times;</a>
+  <strong>注意: </strong>{{message}}
+</div>
+{% endfor %}
+{% endif %}
+
+{% if session.identity and session.identity == 'admin' %}
+
+
+<form action="{{ url_for('admin_update_teacher') }}" method=post class="form-horizontal" operation="">
+  <input type="text" class="form-control" value="" placeholder="请输入更新的教师id" id="teacher_id" name="teacher_id" /> 
+  <input type="text" class="form-control" value="" placeholder="请输入更新的教师专业号" id="teacher_major_id" name="teacher_major_id" /> 
+  <input type="text" class="form-control" value="" placeholder="请输入更新的教师用户id" id="teacher_user_id" name="teacher_user_id" /> 
+  <input type="text" class="form-control" value="" placeholder="请输入更新的教师性别" id="teacher_sex" name="teacher_sex" /> 
+  <input type="text" class="form-control" value="" placeholder="请输入更新的教师院系" id="teacher_college" name="teacher_college" /> 
+ 
+  <br>
+  <button type="submit" class="btn btn-primary btn-lg btn-block" href="#">提交</button>
+</form>
+
+{% else %}
+
+<h2>未授权操作!</h2>
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% block body %}
+
+{% if not session.user %} 
+{% for message in get_flashed_messages() %}
+<div class="alert alert-info">
+  <a href="/login" class="close" data-dismiss="alert">&times;</a>
+  <strong>注意: </strong>{{message}}
+</div>
+{% endfor %}
+{% endif %}
+
+{% if session.identity and session.identity == 'admin' %}
+
+<h2>增加一个学生/教师用户</h2>
+
+
+<form action="{{ url_for('admin_insert_user') }}" method=post class="form-horizontal" operation="">
+    <input type="checkbox" name="uIdentity" value="0" /> 学生
+    <input type="checkbox" name="uIdentity" value="1" /> 老师
+    
+    <input type="text" class="form-control" value="" placeholder="请输入新建的用户ID" id="choose-course" name="uID" /> 
+    <input type="text" class="form-control" value="" placeholder="请输入新建的用户密码" id="choose-course" name="uPassword" /> 
+   
+    <button type="submit" class="btn btn-primary btn-lg btn-block" href="#">提交</button>
+</form>
+
+<h2>赋予账户权限</h2>
+<form action="{{ url_for('admin_grant_user') }}" method=post class="form-horizontal" operation="">
+  <input type="text" class="form-control" value="" placeholder="请输入要选的课程号" id="choose-course" name="grantid" /> 
+  
+  <br>
+  <button type="submit" class="btn btn-primary btn-lg btn-block" href="#">提交</button>
+</form>
+
+<h2>撤回账户权限</h2>
+<form action="{{ url_for('admin_revoke_user') }}" method=post class="form-horizontal" operation="">
+  <input type="text" class="form-control" value="" placeholder="请输入要选的课程号" id="choose-course" name="revokeid" /> 
+  
+  <br>
+  <button type="submit" class="btn btn-primary btn-lg btn-block" href="#">提交</button>
+</form>
+{% else %}
+
+<h2>未授权操作!</h2>
+
+{% endif %}
+
+{% endblock %}

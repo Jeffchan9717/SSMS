@@ -38,80 +38,158 @@
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse-01"></button>
         <div class="collapse navbar-collapse" id="navbar-collapse-01">
           <ul class="nav navbar-nav mr-auto">
+
+            {% if session.identity == 'student' %}
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">查看信息</a>
+              <span class="dropdown-arrow"></span>
+              <ul class="dropdown-menu">
+                <li>
+                  <a href="{{ url_for('student_see_all_course') }}">所有课程信息</a>
+                </li>
+                <li>
+                  <a href="{{ url_for('student_see_all_student') }}">所有学生信息</a>
+                </li>
+              </ul>
+            </li>
+
             <li>
-              <a href="{{ url_for('view') }}">所有信息</a>
+              <a href="{{ url_for('student_choose_course') }}">选课</a>
             </li>
 
-            <!-- 学生相关操作 -->
+            <li>
+                <a href="{{ url_for('student_see_course') }}">我的课程信息</a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('student_see_termscore') }}">各学期成绩</a>
+            </li>
+            {% elif session.identity == 'teacher'  %}
+
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">学生操作</a>
-              <span class="dropdown-arrow"></span>
-              <ul class="dropdown-menu">
-                <li>
-                  <a href="{{ url_for('add') }}">添加</a>
-                </li>
-                <li>
-                  <a href="{{ url_for('delete') }}">删除</a>
-                </li>
-                <li>
-                  <a href="{{ url_for('update') }}">修改</a>
-                </li>
-                <li>
-                  <a href="{{ url_for('search') }}">查询</a>
-                </li>
-              </ul>
-            </li>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">查看信息</a>
+                <span class="dropdown-arrow"></span>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a href="{{ url_for('teacher_see_all_student') }}">所有学生信息</a>
+                  </li>
+                  <li>
+                    <a href="{{ url_for('teacher_see_all_teacher') }}">所有教师信息</a>
+                  </li>
+                  <li>
+                      <a href="{{ url_for('teacher_see_all_score') }}">所有学生成绩</a>
+                    </li>
+                </ul>
+              </li>
 
-            <!-- 教师相关操作 -->
+              <li>
+                <a href="{{ url_for('teacher_choose_course') }}">选课</a>
+              </li>
+              <li>
+                <a href="{{ url_for('teacher_see_course') }}">查看所教课程</a>
+              </li>
+              <li>
+                <a href="{{ url_for('teacher_update_scScore') }}">录入学生成绩</a>
+              </li>
+            {% elif session.identity == 'admin'  %}
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">教师操作</a>
-              <span class="dropdown-arrow"></span>
-              <ul class="dropdown-menu">
-                <li>
-                  <a href="{{ url_for('add') }}">添加</a>
-                </li>
-                <li>
-                  <a href="{{ url_for('delete') }}">删除</a>
-                </li>
-                <li>
-                  <a href="{{ url_for('update') }}">修改</a>
-                </li>
-                <li>
-                  <a href="{{ url_for('search') }}">查询</a>
-                </li>
-              </ul>
-            </li>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">查看信息</a>
+                <span class="dropdown-arrow"></span>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a href="{{ url_for('admin_see_all_user') }}">账户信息</a>
+                  </li>
+                  <li>
+                    <a href="{{ url_for('admin_see_all_student') }}">学生信息</a>
+                  </li>
+                  <li>
+                      <a href="{{ url_for('admin_see_all_teacher') }}">教师信息</a>
+                  </li>
+                  <li>
+                      <a href="{{ url_for('admin_see_all_score') }}">学生成绩</a>
+                  </li>
+                  <li>
+                      <a href="{{ url_for('admin_see_all_TC') }}">教师授课</a>
+                  </li>
+                  <li>
+                      <a href="{{ url_for('admin_see_all_major') }}">专业信息</a>
+                  </li>
+                  <li>
+                      <a href="{{ url_for('admin_see_all_course') }}">课程信息</a>
+                  </li>
+                </ul>
+              </li>
 
-            <!-- 管理员相关操作 -->
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">管理员操作</a>
-              <span class="dropdown-arrow"></span>
-              <ul class="dropdown-menu">
                 <li>
-                  <a href="{{ url_for('add') }}">添加</a>
+                    <a href="{{ url_for('student_see_course') }}">账号管理</a>
                 </li>
-                <li>
-                  <a href="{{ url_for('delete') }}">删除</a>
-                </li>
-                <li>
-                  <a href="{{ url_for('update') }}">修改</a>
-                </li>
-                <li>
-                  <a href="{{ url_for('search') }}">查询</a>
-                </li>
-              </ul>
-            </li>
 
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">课程专业管理</a>
+                    <span class="dropdown-arrow"></span>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <a href="{{ url_for('admin_add_major') }}">添加专业信息</a>
+                      </li>
+                      <li>
+                        <a href="{{ url_for('admin_add_course') }}">添加课程信息</a>
+                      </li>
+                      <li>
+                          <a href="{{ url_for('admin_update_course') }}">更新课程信息</a>
+                        </li>
+                      <li>
+                          <a href="{{ url_for('admin_delete_course') }}">删除课程</a>
+                        </li>
+                    </ul>
+                  </li>
 
-          </ul>
-          <form class="navbar-form navbar-right">
-            {% if not session.logged_in %}
-            <a type="submit" href="{{ url_for('login') }}" class="btn btn-block btn-lg btn-primary" name="opt" value="LOGIN">登入</a>
-            {% else %}
-            <a type="submit" href="{{ url_for('logout') }}" class="btn btn-default" name="opt" value="LOGOUT">登出</a>
+                  <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">学生信息管理</a>
+                      <span class="dropdown-arrow"></span>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <a href="{{ url_for('admin_update_student') }}">更新学生信息</a>
+                        </li>
+                        <li>
+                          <a href="{{ url_for('admin_delete_student') }}">删除学生信息</a>
+                        </li>
+                      </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">教师信息管理</a>
+                        <span class="dropdown-arrow"></span>
+                        <ul class="dropdown-menu">
+                          <li>
+                            <a href="{{ url_for('admin_update_teacher') }}">更新教师信息</a>
+                          </li>
+                          <li>
+                            <a href="{{ url_for('admin_delete_teacher') }}">删除教师信息</a>
+                          </li>
+                        </ul>
+                      </li>
+
             {% endif %}
-          </form>
+          </ul>
+
+
+          {% if not session.user %}
+          <!-- <div class="navbar-form navbar-left">
+              <a type="submit" href="{{ url_for('signup') }}" class="btn btn-block btn-lg btn-primary" name="opt" value="SIGNUP">注册</a>
+          </div> -->
+          <div class="navbar-form navbar-right">
+            <a type="submit" href="{{ url_for('login') }}" class="btn btn-block btn-lg btn-primary" name="opt" value="LOGIN">登入</a>                  
+          </div>
+          {% else %}
+          <div class="navbar-form navbar-right">
+            <a type="submit" href="{{ url_for('logout') }}" class="btn btn-default" name="opt" value="LOGOUT">登出</a>
+          </div>  
+          {% endif %}     
+          <!-- <form class="navbar-form navbar-right"> -->  
+
+          <!-- </form> -->
         </div>
+        
       </div>
     </nav>
 

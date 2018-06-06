@@ -1,0 +1,55 @@
+{% extends "layout.html" %} 
+{% block body %} 
+
+
+{% for message in get_flashed_messages() %}
+<div class="alert alert-info">
+  <a href="/" class="close" data-dismiss="alert">&times;</a>
+  <strong>注意: </strong>{{message}}
+</div>
+{% endfor %} 
+
+
+
+<div class="login">
+  <div class="login-screen">
+    <div class="login-icon">
+      <img src="static/images/login/icon.png" alt="Welcome to Mail App" />
+      <h4>欢迎注册
+        <small>学生成绩管理系统(SSMS)</small>
+      </h4>
+    </div>
+
+    <form action="{{ url_for('signup') }}" method=post class="form-horizontal">
+
+      <div class="login-form">
+        <div class="form-group">
+          <input type="text" class="form-control login-field" value="" placeholder="请输入账号名称" id="login-name" name="username" /> 
+          {% if error=="true" %}
+          <div class="control-group error">
+            <div class="controls">
+              <span class="help-inline" id="inputUserNameError">用户名或密码或邮箱不正确</span>
+            </div>
+
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          <input type="password" class="form-control login-field" value="" placeholder="请输入账号密码" id="login-pass" name="password" /> 
+          {% if error=="true" %}
+          <div class="controls">
+            <span class="help-inline">用户名或密码或邮箱不正确</span>
+          </div>
+          {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg btn-block" href="#">注册</button>
+      </div>
+
+    </form>
+
+  </div>
+</div> 
+
+{% endblock %}

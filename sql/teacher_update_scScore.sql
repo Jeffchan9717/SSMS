@@ -1,3 +1,4 @@
+DROP PROCEDURE IF EXISTS teacher_update_scScore;
 delimiter $$
 CREATE PROCEDURE teacher_update_scScore(psID int, pcID int, pscScore TINYINT)
 BEGIN

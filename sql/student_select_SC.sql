@@ -1,3 +1,4 @@
+DROP PROCEDURE IF EXISTS student_select_SC;
 delimiter $$
 CREATE PROCEDURE student_select_SC()
 	SELECT SC.sID, SC.cID, SC.scScore, cCredit FROM SC, user_info, student_info, course_info  WHERE

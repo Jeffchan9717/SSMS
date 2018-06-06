@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block body %}
+
+{% if not session.user %} 
+{% for message in get_flashed_messages() %}
+<div class="alert alert-info">
+  <a href="/login" class="close" data-dismiss="alert">&times;</a>
+  <strong>注意: </strong>{{message}}
+</div>
+{% endfor %}
+{% endif %}
+
+{% if session.identity and session.identity == 'admin' %}
+
+
+<form action="{{ url_for('admin_add_major') }}" method=post class="form-horizontal" operation="">
+  <input type="text" class="form-control" value="" placeholder="请输入新建的专业号" id="majorid" name="majorid" /> 
+  <input type="text" class="form-control" value="" placeholder="请输入新建的专业名称" id="major_name" name="major_name" /> 
+  
+  <br>
+  <button type="submit" class="btn btn-primary btn-lg btn-block" href="#">提交</button>
+</form>
+
+{% else %}
+
+<h2>未授权操作!</h2>
+
+{% endif %}
+
+{% endblock %}

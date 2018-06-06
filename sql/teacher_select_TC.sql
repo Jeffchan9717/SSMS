@@ -1,3 +1,4 @@
+DROP PROCEDURE IF EXISTS teacher_select_TC;
 delimiter $$
 CREATE PROCEDURE teacher_select_TC()
 	SELECT TC.tID, TC.cID, cTerm FROM TC, user_info, teacher_info, course_info  WHERE

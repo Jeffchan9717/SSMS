@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block body %}
+
+{% if not session.user %} 
+{% for message in get_flashed_messages() %}
+<div class="alert alert-info">
+  <a href="/login" class="close" data-dismiss="alert">&times;</a>
+  <strong>注意: </strong>{{message}}
+</div>
+{% endfor %}
+{% endif %}
+
+{% if session.identity and session.identity == 'admin' %}
+
+
+<form action="{{ url_for('admin_update_student') }}" method=post class="form-horizontal" operation="">
+  <input type="text" class="form-control" value="" placeholder="请输入更新的学生id" id="student_id" name="student_id" /> 
+  <input type="text" class="form-control" value="" placeholder="请输入更新的学生专业号" id="student_major_id" name="student_major_id" /> 
+  <input type="text" class="form-control" value="" placeholder="请输入更新的学生用户id" id="student_user_id" name="student_user_id" /> 
+  <input type="text" class="form-control" value="" placeholder="请输入更新的学生性别" id="student_sex" name="student_sex" /> 
+  <input type="text" class="form-control" value="" placeholder="请输入更新的学生生日" id="student_birthday" name="student_birthday" /> 
+  <input type="text" class="form-control" value="" placeholder="请输入更新的学生籍贯" id="student_birthplace" name="student_birthplace" /> 
+  <input type="text" class="form-control" value="" placeholder="请输入更新的学生院系" id="student_college" name="student_college" /> 
+  <input type="text" class="form-control" value="" placeholder="请输入更新的学生班级" id="student_class" name="student_class" /> 
+   
+  <br>
+  <button type="submit" class="btn btn-primary btn-lg btn-block" href="#">提交</button>
+</form>
+
+{% else %}
+
+<h2>未授权操作!</h2>
+
+{% endif %}
+
+{% endblock %}

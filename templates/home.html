@@ -1,11 +1,20 @@
 {% extends "layout.html" %} 
 {% block body %}
 
+{% for message in get_flashed_messages() %}
+<div class="alert alert-info">
+  <a href="/" class="close" data-dismiss="alert">&times;</a>
+  <strong>注意: </strong>{{message}}
+</div>
+{% endfor %} 
+
+
 
 <div class="hero-unit">
   <h2>SSMS - 便于管理你的学生教师信息</h2>
   <p>这是一个学生信息管理系统, 你可以对学生记录进行添加, 删除, 修改, 查询操作. 你需要登录后使用这些功能</p>
-  
-  <!-- <a href="{{ url_for('login') }}" class="btn btn-large btn-success">登录</a> -->
+  {% if session.user and session.identity %}
+  <p>{{ session.user }} 你好! 你的身份是 {{ session.identity }}</p>
+  {% endif %}
 </div>
 {% endblock %}

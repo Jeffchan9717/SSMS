@@ -1,3 +1,10 @@
+DROP USER IF EXISTS '钟巧言'@localhost;
+DROP USER IF EXISTS '王栋'@localhost;
+DROP USER IF EXISTS '嘉吉'@localhost;
+DROP USER IF EXISTS '小梅'@localhost;
+DROP USER IF EXISTS '李玉婷'@localhost;
+DROP USER IF EXISTS '赵师师'@localhost;
+DROP USER IF EXISTS '王思文'@localhost;
 call admin_insert_user_info('钟巧言', '281767', 0);
 call admin_insert_user_info('王栋', '213213', 0);
 call admin_insert_user_info('嘉吉', '638585', 0);
@@ -13,27 +20,27 @@ call admin_insert_course_info('线性代数', 4, '201802');
 call admin_insert_course_info('离散数学', 5, '201802');
 call admin_insert_course_info('C语言', 3, '201801');
 
-假设上面课程的cID分别为 1 ～ 6；
-INSERT INTO SC VALUES('钟巧言', 1);
-INSERT INTO SC VALUES('钟巧言', 2);
-INSERT INTO SC VALUES('钟巧言', 3);
-INSERT INTO SC VALUES('钟巧言', 6);
-INSERT INTO SC VALUES('王栋', 1);
-INSERT INTO SC VALUES('王栋', 3);
-INSERT INTO SC VALUES('王栋', 5);
-INSERT INTO SC VALUES('嘉吉', 1);
-INSERT INTO SC VALUES('嘉吉', 5);
-INSERT INTO SC VALUES('小梅', 4);
-INSERT INTO SC VALUES('小梅', 6);
+-- 假设上面课程的cID分别为 1 ～ 6；
+INSERT INTO SC VALUES(1, 1, 94);
+INSERT INTO SC VALUES(1, 2, 52);
+INSERT INTO SC VALUES(1, 3, 66);
+INSERT INTO SC VALUES(1, 6, 81);
+INSERT INTO SC VALUES(2, 1, 88);
+INSERT INTO SC VALUES(2, 3, 99);
+INSERT INTO SC VALUES(2, 5, 78);
+INSERT INTO SC VALUES(3, 1, 60);
+INSERT INTO SC VALUES(3, 5, 72);
+INSERT INTO SC VALUES(4, 4, 74);
+INSERT INTO SC VALUES(4, 6, 91);
 
-INSERT INTO TC VALUES('李玉婷', 1);
-INSERT INTO TC VALUES('李玉婷', 2);
-INSERT INTO TC VALUES('李玉婷', 3);
-INSERT INTO TC VALUES('赵师师', 1);
-INSERT INTO TC VALUES('赵师师', 4);
-INSERT INTO TC VALUES('赵师师', 5);
-INSERT INTO TC VALUES('王思文', 2);
-INSERT INTO TC VALUES('王思文', 4);
-INSERT INTO TC VALUES('王思文', 6);
+INSERT INTO TC VALUES(1, 1);
+INSERT INTO TC VALUES(1, 2);
+INSERT INTO TC VALUES(1, 3);
+INSERT INTO TC VALUES(2, 1);
+INSERT INTO TC VALUES(2, 4);
+INSERT INTO TC VALUES(2, 5);
+INSERT INTO TC VALUES(3, 2);
+INSERT INTO TC VALUES(3, 4);
+INSERT INTO TC VALUES(3, 6);
 
-#专业表没用上
+-- #专业表没用上

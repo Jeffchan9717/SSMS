@@ -1,3 +1,4 @@
+DROP PROCEDURE IF EXISTS student_select_ctermScore;
 delimiter $$
 CREATE PROCEDURE student_select_ctermScore(pcTerm VARCHAR(10))
 	SELECT cTerm, course_info.cID, SC.scSCore FROM SC, course_info, student_info
