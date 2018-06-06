@@ -18,10 +18,10 @@ admin_select_[series]_info.sql 管理员查看一系列信息
 	#call admin_select_TC_info;
 	#call admin_select_major_info;
 	#call admin_select_course_info;
-student_select_[series]_info.sql 管理员查看一系列信息
+student_select_[series]_info.sql 学生查看一系列信息
 	#call student_select_course_info;
 	#call student_select_student_info;
-teacher_select_[series]_info.sql 管理员查看一系列信息
+teacher_select_[series]_info.sql 教师查看一系列信息
 	#call teacher_select_student_info;
 	#call teacher_select_SC_info;
 	#call teacher_select_teacher_info;

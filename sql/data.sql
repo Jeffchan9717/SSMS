@@ -21,6 +21,7 @@ call admin_insert_course_info('离散数学', 5, '201802');
 call admin_insert_course_info('C语言', 3, '201801');
 
 -- 假设上面课程的cID分别为 1 ～ 6；
+
 INSERT INTO SC VALUES(1, 1, 94);
 INSERT INTO SC VALUES(1, 2, 52);
 INSERT INTO SC VALUES(1, 3, 66);
@@ -42,5 +43,6 @@ INSERT INTO TC VALUES(2, 5);
 INSERT INTO TC VALUES(3, 2);
 INSERT INTO TC VALUES(3, 4);
 INSERT INTO TC VALUES(3, 6);
+
 
 -- #专业表没用上
