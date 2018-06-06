@@ -1,3 +1,4 @@
+DROP PROCEDURE IF EXISTS admin_GRANT_user_access;
 delimiter $$
 CREATE PROCEDURE admin_GRANT_user_access(puID VARCHAR(100))
 BEGIN

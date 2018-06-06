@@ -1,4 +1,4 @@
-drop PROCEDURE if exists sp_validateLogin;
+DROP PROCEDURE IF EXISTS sp_validateLogin;
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_validateLogin`(

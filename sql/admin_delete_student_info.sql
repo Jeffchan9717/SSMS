@@ -1,3 +1,4 @@
+DROP PROCEDURE IF EXISTS admin_delete_student_info;
 delimiter $$
 CREATE PROCEDURE admin_delete_student_info(psID int)
 BEGIN

@@ -1,3 +1,4 @@
+DROP PROCEDURE IF EXISTS admin_insert_user_info;
 delimiter $$
 CREATE PROCEDURE admin_insert_user_info(puID VARCHAR(100), puPassword VARCHAR(100), puIdentity TINYINT)
 BEGIN   

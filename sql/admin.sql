@@ -1,3 +1,4 @@
+DROP DATABASE if exists school;
 CREATE database school;
 	ALTER DATABASE school CHARACTER SET utf8 COLLATE utf8_general_ci;
 	USE school;

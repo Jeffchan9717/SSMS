@@ -1,4 +1,4 @@
-drop PROCEDURE if exists sp_createUser;
+DROP PROCEDURE IF EXISTS sp_createUser;
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_createUser`(

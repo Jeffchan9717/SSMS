@@ -1,3 +1,4 @@
+DROP PROCEDURE IF EXISTS teacher_insert_TC;
 delimiter $$
 CREATE PROCEDURE teacher_insert_TC(pcID int)
 BEGIN
