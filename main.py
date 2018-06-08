@@ -21,7 +21,7 @@ app.secret_key = 'development key'
 app.config['MYSQL_DATABASE_DB'] = 'school'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'cyosinnu'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'vancir'
 mysql.init_app(app)
 
 
