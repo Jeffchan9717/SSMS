@@ -193,7 +193,7 @@ def teacher_see_all_teacher():
         # 教师查看所有的教师信息
         conn = mysql.connect()
         cursor = conn.cursor()
-        cursor.callproc('teacher_select_teacher_info')
+        cursor.callproc('admin_select_teacher_info')
         feedback = cursor.fetchall()
         print str(feedback)
         cursor.close()
@@ -588,7 +588,6 @@ def login():
                 session['identity'] = _identity # 保存账户身份信息
                 flash('你已成功登入')
 
-
                 # create application
                 mysql = MySQL(autocommit = True)
                 app = Flask(__name__)
@@ -599,6 +598,7 @@ def login():
                 app.config['MYSQL_DATABASE_USER'] = request.form['username'].encode('utf8')
                 app.config['MYSQL_DATABASE_PASSWORD'] = request.form['password'].encode('utf8')
                 mysql.init_app(app)
+
 
                 return redirect(url_for('home'))
             else:
