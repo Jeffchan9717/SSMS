@@ -20,7 +20,17 @@ call admin_insert_course_info('线性代数', 4, '201802');
 call admin_insert_course_info('离散数学', 5, '201802');
 call admin_insert_course_info('C语言', 3, '201801');
 
+
+ call admin_GRANT_user_access('钟巧言');
+ call admin_GRANT_user_access('王栋');
+ call admin_GRANT_user_access('嘉吉');
+ call admin_GRANT_user_access('小梅');
+ call admin_GRANT_user_access('李玉婷');
+ call admin_GRANT_user_access('赵师师');
+ call admin_GRANT_user_access('王思文');
+
 -- 假设上面课程的cID分别为 1 ～ 6；
+
 INSERT INTO SC VALUES(1, 1, 94);
 INSERT INTO SC VALUES(1, 2, 52);
 INSERT INTO SC VALUES(1, 3, 66);
@@ -42,5 +52,6 @@ INSERT INTO TC VALUES(2, 5);
 INSERT INTO TC VALUES(3, 2);
 INSERT INTO TC VALUES(3, 4);
 INSERT INTO TC VALUES(3, 6);
+
 
 -- #专业表没用上

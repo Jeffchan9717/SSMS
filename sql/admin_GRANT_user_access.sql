@@ -6,8 +6,10 @@ BEGIN
  SET @`sql`:=CONCAT('GRANT ALL PRIVILEGES on *.* to ', `puID`, `_HOST`);
  PREPARE `stmt` FROM @`sql`;
  EXECUTE `stmt`;
+ #call admin_GRANT_user_access(puid);
 END
 $$
 #CALL admin_GRANT_user_access('刘松') ;
 $$
 delimiter ;
+

@@ -1,6 +1,7 @@
 DROP DATABASE if exists school;
 CREATE database school;
-	ALTER DATABASE school CHARACTER SET utf8 COLLATE utf8_general_ci;
+	ALTER DATABASE school CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;;
+	#ALTER DATABASE school CHARACTER SET utf8 COLLATE utf8_general_ci;
 	USE school;
 
 CREATE table major_info(mID SMALLINT PRIMARY KEY, mName VARCHAR(100));

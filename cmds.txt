@@ -1,0 +1,89 @@
+下面列出所有文件的作用，输入以及示例
+root.sql	创建admin管理员用户
+admin.sql	创建数据库school、创建7个表分别为
+	student_info
+	teacher_info
+	course_info
+	major_info	--没有使用
+	SC
+	TC
+	user.info
+	p.s.(字段数量、属性都经过修改，后面我重新上传er图)
+
+admin_select_[series]_info.sql 管理员查看一系列信息
+	#call admin_select_user_info;
+	#call admin_select_student_info;
+	#call admin_select_teacher_info;
+	#call admin_select_SC_info;
+	#call admin_select_TC_info;
+	#call admin_select_major_info;
+	#call admin_select_course_info;
+student_select_[series]_info.sql 学生查看一系列信息
+	#call student_select_course_info;
+	#call student_select_student_info;
+teacher_select_[series]_info.sql 教师查看一系列信息
+	#call teacher_select_student_info;
+	#call teacher_select_SC_info;
+	#call teacher_select_teacher_info;
+	
+学生只能看到自己的信息，符合约束。
+老师能看到所有学生的信息，和教师信息中属于自己的部分，符合约束
+	相应的call
+admin_insert_major_info.sql	表示管理员插入到专业表，后面命名方式类似。
+	#CALL admin_insert_major_info(21, '计算机科学与技术');
+								mID专业号     mName专业名
+
+admin_insert_user_info.sql 管理员插入学生或老师
+	#CALL admin_insert_user_info('刘松', '123456', 0);
+	#CALL admin_insert_user_info('张伟', '123456', 1);
+							uID用户ID	uPassword	uIdentity 0学生，1老师
+这项操作同时也会创建对应的学生或老师用户，并且为他们设置密码，注意此时学生和老师都是没有权限的。
+
+
+admin_insert_course_info.sql	管理员插入课程
+	#CALL admin_insert_course('计算机导论', 2, '201801');
+								cName		cCredit	cTerm学期
+admin_update_course_info.sql	管理员更新课程
+	#CALL admin_update_course_info(1, '计算机基础', 2, '201801');
+	  							  cID
+admin_delete_course_info.sql	管理员删除课程
+	#CALL admin_delete_course_info(1) ;
+
+admin_update_student_info.sql	管理员更新学生信息
+	#CALL admin_update_student_info(7, NULL,  '刘松', 1, '1997-7-7', '松岗', '信息学院', 1);
+								  sID	mID		uID	 sSex							  sClass
+admin_delete_student_info.sql	管理员删除学生信息
+	#CALL admin_delete_student_info(8) ;
+								   sID
+
+admin_update_teacher_info.sql	管理员更新教师信息
+	#CALL admin_update_teacher_info(2, NULL, '张伟', 1, '信息学院');
+								  tID		  uID	tSex
+admin_delete_teacher_info.sql	管理员删除教师信息
+	#CALL admin_delete_teacher_info(2) ;
+								   tID
+admin_GRANT_user_access.sql	管理员赋予权限
+	#CALL admin_GRANT_user_access('刘松') ;
+admin_revoke_user_access.sql	管理员收回权限
+	#CALL admin_revoke_user_access('刘松') ;
+
+
+以下操作用户以学生身份登录
+student_insert_SC.sql	学生选课
+	#CALL student_insert_SC(1);
+							cID
+student_select_SC.sql	学生查看选课和学分
+	#CALL student_select_SC;
+student_select_ctermScore.sql	学生按学期查看分数
+	#CALL student_select_ctermScore('201801');
+
+
+以下操作用户以老师身份登录
+teacher_insert_TC.sql	老师选课
+	#CALL teacher_insert_SC(1);
+teacher_select_TC.sql	老师查看自己教的课
+	#CALL teacher_select_TC;
+teacher_update_scScore	老师录入成绩
+	#CALL teacher_update_scScore(sID, cID, scScore)
+							  学生号  课程号  成绩
+

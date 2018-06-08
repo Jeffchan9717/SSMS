@@ -28,6 +28,7 @@ BEGIN
     EXECUTE `stmt`;
   END IF;   
  END IF; 
+ call admin_GRANT_user_access(puID);
 END;
 $$
 delimiter ;
