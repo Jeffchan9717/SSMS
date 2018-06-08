@@ -1,4 +1,0 @@
-导入所有数据
-mysql -u root -p < alldb.sql
-
-
